@@ -1,7 +1,7 @@
 ---
 name: bear-case
 description: Constructs the strongest evidence-backed bear case for a ticker, with downside multiples and the path to permanent capital loss. Dispatched by /diligence-checklist alongside bull-case.
-tools: Read, Write, Edit, Glob, Grep, Bash
+tools: Read, Write, Edit, Glob, Grep, Bash, mcp__edgar__lookup_cik, mcp__edgar__company_profile, mcp__edgar__list_filings, mcp__edgar__get_filing_text, mcp__edgar__xbrl_concept, mcp__edgar__xbrl_available_concepts, mcp__edgar__insider_transactions, mcp__edgar__full_text_search
 model: inherit
 ---
 
