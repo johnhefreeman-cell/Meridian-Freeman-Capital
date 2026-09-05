@@ -20,3 +20,7 @@ scratch/
 # OS
 .DS_Store
 Thumbs.db
+
+# Cached vendor price data. The repo is public; the fetcher reproduces this
+# from the source rather than redistributing it.
+data/daily/
