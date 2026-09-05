@@ -26,8 +26,8 @@ gross margin, 77% pre-tax ROIC, 0.16x net leverage, twelve straight quarters at
 or above the guided midpoint, and a PwC signature unbroken since 1977 — and it
 returns 88.9% of free cash flow to shareholders, which under §3.1 makes it a
 **capital-return story to be underwritten at a FCF yield**. That yield is
-**1.55%**. The compression-only bear, assuming *nothing goes operationally
-wrong*, loses **33.6%**.
+**1.55%**. And the bear's *base* case — the guide holds, nothing impairs, the
+multiple merely reverts to KLA's own four-year median — still loses **33.6%**.
 
 ## Gate table — §3.1, Type B column
 
@@ -51,21 +51,31 @@ it does not get compounder multiples."* KLAC trades at 50.7x.
 
 §5 requires a base-case 3-year IRR ≥15% **and** a bear case losing **<25%**.
 
-| Case | Path | 3-yr outcome |
-| --- | --- | --- |
-| Bull, at a defensible exit | 28.0x exit (5-yr median +35%) | **+6.7% IRR** |
-| Bull, at the 5-yr median exit | 20.7x | **−3.4% IRR** |
-| **Compression only — no impairment** | multiple reverts to the board's own transacted range | **−33.6%** |
-| Full bear | compression + cycle | **−64.1%** |
+Both limbs fail, and the two agents built their scenarios independently.
+
+| Whose case | Assumption | Exit | 3-yr outcome |
+| --- | --- | --- | --- |
+| Bull, base | FY30E EPS $7.94, exit at the 5-yr median +35% | 28.0x | **+6.7% IRR** |
+| Bull, at the 5-yr median itself | §5's default terminal cap | 20.7x | **−3.4% IRR** |
+| **Bear, base — the guide holds, nothing impairs** | FY27 +25%, FY28 +8%, one modest digestion year; multiple reverts to KLA's own 4-yr median | 24.5x | **−33.6%** total, −12.7% p.a. |
+| Bear, bear | AI capex digests one year: FY28 revenue −25%, GM to 57.5%, multiple below the FY24–26 band | 22.0x | **−64.1%** total, −28.8% p.a. |
+| Bear, bull | Process-control intensity structurally steps up, China eases, market pays the board's best-ever multiple | 34.5x | +33.8% total, **+10.2% p.a.** |
+
+- **Base-case IRR ≥15%: fails on both agents' arithmetic.** The bull's own
+  defensible base is +6.7%; even its optimistic 34.5x exit is +10.2% p.a.
+- **Bear loses <25%: fails at −64.1%**, and the limit is breached by more than
+  two and a half times.
+
+**The finding is the row in the middle.** The bear's *base* case assumes no
+missed quarter, no impairment, no lost customer — the guide holds — and the
+multiple simply reverts to KLA's own four-year median. It still loses **33.6%**.
+§5's downside limit is breached with nothing going wrong in the business.
 
 Break-even over three years requires a **37.9x** exit; a 15% IRR requires
-**56.9x** — above today's 50.7x, which is already the highest multiple in the
-record.
-
-**The compression-only bear is the finding.** It assumes no missed quarter, no
-impairment, no lost customer — only the multiple returning to what KLA's own
-board has paid. It breaches the 25% limit by 8.6 points. §5 fails without
-anything going wrong in the business.
+**56.9x** — above every observation in either primary-source series, and above
+today's 50.7x trailing, which is itself the highest in the record. (Two multiple
+bases appear across the files and both are stated: **50.7x on trailing FY26 EPS
+of $3.66**, and **38.5x on the bull's FY27E**. Neither is a vendor figure.)
 
 ## The multiple anchor — derived from primary sources, and self-validating
 
@@ -116,7 +126,7 @@ found on MRVL and AMAT.
 | Auditor / material weakness / restatement | **NOT TRIPPED.** PwC since 1977, ICFR effective, no restatement. |
 | Serial one-time charges >15% of opex in 3 of 4 | **NOT TRIPPED.** 7.3%, 3.3%, 5.6%, 3.3%. Worst window in the record has 2, never 3. |
 | Related-party material to earnings | **NOT TRIPPED.** |
-| Share count >4%/yr without revenue/share growth | **NOT TRIPPED — inverted.** Shares 136.2M→132.0M; revenue/share +42.8% over two years. |
+| Share count >4%/yr without revenue/share growth | **NOT TRIPPED — inverted.** Diluted shares fell 1,361.9M→1,337.5M→1,319.6M (−1.6%, −1.3%); revenue per share $7.20→$9.09→$10.29, +42.8% over two years. *(Pre-split, the same series reads 136.2M→132.0M.)* |
 | Customer concentration >25%, no multi-year contract | **NOT TRIPPED.** TSMC 19%. |
 | Thesis needs a number not tie-able to a filing | **FENCE, not a kill.** The "2030 target model" is in no filing — the Investor Day 8-K points only to the IR website. Anything leaning on it is **UNVERIFIED** under §7. |
 
