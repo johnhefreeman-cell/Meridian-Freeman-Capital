@@ -36,17 +36,36 @@ def alternating(magnitude: float, n: int = 40) -> list[float]:
     return [magnitude if i % 2 == 0 else -magnitude for i in range(n)]
 
 
-def build_workbook(path: Path, holdings: dict[str, float],
-                   vols: dict[str, float]) -> Path:
+def build_workbook(path: Path, holdings, vols: dict[str, float],
+                   account: str = "Joint Brokerage") -> Path:
+    """`holdings` is {ticker: value}, or {account: {ticker: value}}."""
+    if holdings and not isinstance(next(iter(holdings.values())), dict):
+        holdings = {account: holdings}
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Asset PM"
-    ws.append([None] * 12)
-    for ticker, value in holdings.items():
+
+    # ACCOUNT SUMMARY block — the parser learns real account names here, so
+    # asset-class labels sharing column A are not mistaken for accounts.
+    hdr = [None] * 12
+    hdr[rs.ACCOUNT_NAME_COL] = "Account"
+    ws.append(hdr)
+    for acct in holdings:
         row = [None] * 12
-        row[rs.HOLD_TICKER_COL] = ticker
-        row[rs.HOLD_VALUE_COL] = value
+        row[rs.ACCOUNT_NAME_COL] = acct
         ws.append(row)
+    tot = [None] * 12
+    tot[rs.ACCOUNT_NAME_COL] = "TOTAL PORTFOLIO"
+    ws.append(tot)
+
+    for acct, positions in holdings.items():
+        ws.append([acct] + [None] * 11)          # account section header
+        ws.append(["US Stocks"] + [None] * 11)   # asset-class label, not an account
+        for ticker, value in positions.items():
+            row = [None] * 12
+            row[rs.HOLD_TICKER_COL] = ticker
+            row[rs.HOLD_VALUE_COL] = value
+            ws.append(row)
     for ticker, mag in vols.items():
         sh = wb.create_sheet(f"HMM {ticker}")
         sh.append([None] * 10)
@@ -75,17 +94,40 @@ def load(book):
 
 # ------------------------------------------------------------ parsing
 
-def test_holdings_sum_across_accounts(tmp_path):
-    p = build_workbook(tmp_path / "d.xlsx", {}, {"AAA": 0.02})
-    wb = openpyxl.load_workbook(p)
-    ws = wb["Asset PM"]
-    for value in (1_000, 2_500):
-        row = [None] * 12
-        row[rs.HOLD_TICKER_COL] = "AAA"
-        row[rs.HOLD_VALUE_COL] = value
-        ws.append(row)
-    wb.save(p)
+def test_pooled_holdings_sum_the_same_name_across_accounts(tmp_path):
+    p = build_workbook(tmp_path / "d.xlsx",
+                       {"401K": {"AAA": 1_000}, "Joint Brokerage": {"AAA": 2_500}},
+                       {"AAA": 0.02})
     assert rs.load_holdings(openpyxl.load_workbook(p, data_only=True))["AAA"] == 3_500
+
+
+def test_accounts_are_kept_separate(tmp_path):
+    p = build_workbook(tmp_path / "a.xlsx",
+                       {"401K": {"AAA": 1_000}, "Joint Brokerage": {"BBB": 2_500}},
+                       {"AAA": 0.02, "BBB": 0.03})
+    by = rs.load_holdings_by_account(openpyxl.load_workbook(p, data_only=True))
+    assert by == {"401K": {"AAA": 1_000.0}, "Joint Brokerage": {"BBB": 2_500.0}}
+
+
+def test_asset_class_labels_are_not_treated_as_accounts(tmp_path):
+    """"US Stocks" sits alone in column A exactly like an account header."""
+    p = build_workbook(tmp_path / "l.xlsx", {"401K": {"AAA": 100}}, {"AAA": 0.02})
+    by = rs.load_holdings_by_account(openpyxl.load_workbook(p, data_only=True))
+    assert set(by) == {"401K"}, f"asset-class label leaked in: {set(by)}"
+
+
+@pytest.mark.parametrize("name,expected", [
+    ("Brokerage Link (401K)", True), ("ROTH IRA", True),
+    ("Health Savings Account (HSA)", True), ("Joint Brokerage", False),
+    ("Tre Brokerage", False), ("Crypto", False),
+])
+def test_tax_status_inferred_from_account_name(name, expected):
+    assert rs.is_deferred(name, set(), set()) is expected
+
+
+def test_tax_status_can_be_overridden(tmp_path):
+    assert rs.is_deferred("Joint Brokerage", set(), {"Joint Brokerage"}) is True
+    assert rs.is_deferred("ROTH IRA", {"ROTH IRA"}, set()) is False
 
 
 def test_holdings_without_price_history_are_reported_not_sized(book):
@@ -172,8 +214,18 @@ def test_already_risk_balanced_book_needs_no_trades(tmp_path):
 def test_render_reports_the_top_concentration(book):
     text = rs.render(load(book))
     assert "WILD" in text
-    assert "Largest risk concentration" in text
-    assert "Sizing only" in text, "the no-forecast caveat must survive rendering"
+    assert "Largest: WILD" in text
+    assert "of risk" in text
+
+
+def test_render_labels_tax_status(book):
+    rep = load(book)
+    assert "tax-deferred" in rs.render({**rep, "deferred": True})
+    assert "taxable" in rs.render({**rep, "deferred": False})
+
+
+def test_no_forecast_caveat_is_in_the_footer():
+    assert "no directional forecast" in rs.FOOTER
 
 
 def test_report_is_json_serializable(book):
