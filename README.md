@@ -92,6 +92,7 @@ CLAUDE.md                     Layer 1 — the diligence brain
 .mcp.json  mcp/*.py           Layer 3 — data pipeline
 .claude/agents/*.md           Layer 4 — parallel research team
 scripts/scenario.sh           Layer 5 — worktree scenario lab
+scripts/risk_sizing.py        position sizing by risk contribution
 research/names/<TICKER>/      all work product for a name
 research/_templates/memo.md   the fixed memo structure
 universe/coverage.md          coverage, kills, screen history
