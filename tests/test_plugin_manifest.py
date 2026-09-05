@@ -213,3 +213,24 @@ def test_no_secret_is_hardcoded_in_either_config(plugin_mcp, project_mcp):
         ]
         for v in env_values:
             assert "${" in v, f"hardcoded env value in an MCP config: {v!r}"
+
+
+# ------------------------------------------------ install docs stay in step
+
+def test_install_commands_agree_across_docs():
+    """README and docs/plugin.md both document the install; they must match."""
+    import re
+    readme = (ROOT / "README.md").read_text()
+    guide = (ROOT / "docs" / "plugin.md").read_text()
+    pattern = re.compile(r"^/plugin (?:marketplace add|install) \S+", re.MULTILINE)
+    assert set(pattern.findall(readme)) <= set(pattern.findall(guide)), (
+        "README documents an install command docs/plugin.md does not"
+    )
+
+
+def test_documented_install_matches_the_manifest_names():
+    guide = (ROOT / "docs" / "plugin.md").read_text()
+    plugin = load(".claude-plugin/plugin.json")
+    market = load(".claude-plugin/marketplace.json")
+    expected = f"/plugin install {plugin['name']}@{market['name']}"
+    assert expected in guide, f"docs do not document the real install: {expected}"

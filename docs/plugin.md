@@ -17,17 +17,21 @@ plugins from your **account**, server-side — it does not clone this repo.
 ## Install
 
 ```
-/plugin marketplace add johnhefreeman-cell/Meridian-Freeman-Capital@claude/hello-a9jix6
-/plugin install meridian-diligence@meridian-freeman-capital
-```
-
-The `@claude/hello-a9jix6` ref is required **until this branch merges to
-`main`** — without it Claude Code reads the default branch, which does not yet
-contain the plugin. After merging, drop the ref:
-
-```
 /plugin marketplace add johnhefreeman-cell/Meridian-Freeman-Capital
 /plugin install meridian-diligence@meridian-freeman-capital
+```
+
+**The marketplace resolves the repository's default branch.** This repo has a
+single branch, `claude/hello-a9jix6`, and it *is* the default — so no `@ref` is
+needed and the commands above work as written.
+
+That is the thing to keep true. If you later add a `main` and make it the
+default, the plugin must be on `main` or the install silently reads a branch
+without a `.claude-plugin/` directory and reports the plugin as not found. To
+install from a non-default branch, pin it explicitly:
+
+```
+/plugin marketplace add johnhefreeman-cell/Meridian-Freeman-Capital@some-branch
 ```
 
 On install you are prompted for two values, declared as `userConfig` in

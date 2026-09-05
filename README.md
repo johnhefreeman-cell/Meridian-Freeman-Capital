@@ -32,7 +32,7 @@ cp .env.example .env          # then fill in SEC_EDGAR_USER_AGENT (required)
 every session, Cowork included, with no clone:
 
 ```
-/plugin marketplace add johnhefreeman-cell/Meridian-Freeman-Capital@claude/hello-a9jix6
+/plugin marketplace add johnhefreeman-cell/Meridian-Freeman-Capital
 /plugin install meridian-diligence@meridian-freeman-capital
 ```
 
