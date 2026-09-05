@@ -75,7 +75,7 @@ lose less than 25%, and multiple expansion may not exceed 40% of the return.
 The observable event that promotes this scenario. Be specific — a number in a
 filing, not a sentiment shift.
 EOF
-  info "seeded $(realpath --relative-to="$REPO_ROOT" "$target" 2>/dev/null || echo "$target")"
+  info "seeded ${target#"$SCENARIO_HOME"/}"
 }
 
 cmd_new() {

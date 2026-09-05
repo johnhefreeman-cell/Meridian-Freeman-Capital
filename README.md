@@ -21,10 +21,24 @@ CLAUDE.md ──► Skills ──┬──► MCP Servers ──┐
 
 ## Setup
 
+Two ways to load it. **Project mode** — clone and open in Claude Code:
+
 ```bash
 uv sync                       # or: pip install -e .
 cp .env.example .env          # then fill in SEC_EDGAR_USER_AGENT (required)
 ```
+
+**Plugin mode** — install once on your account so the skills and agents reach
+every session, Cowork included, with no clone:
+
+```
+/plugin marketplace add johnhefreeman-cell/Meridian-Freeman-Capital
+/plugin install meridian-diligence@meridian-freeman-capital
+```
+
+You are prompted for `sec_edgar_user_agent` on install; the FRED key is
+optional. See [docs/plugin.md](docs/plugin.md) for the difference between the
+two modes and the known limits.
 
 `SEC_EDGAR_USER_AGENT` must contain real contact information — SEC blocks
 requests without it. `FRED_API_KEY` is optional and free.
@@ -33,8 +47,18 @@ Verify the pipeline from inside Claude Code with `/mcp`; all four servers
 should report connected.
 
 ```bash
-uv run --with pytest python -m pytest tests/ -q
+uv sync          # mcp + httpx + pytest; yfinance is an extra, see below
+uv run pytest
 ```
+
+CI runs the same command on every pull request and push
+([`.github/workflows/tests.yml`](.github/workflows/tests.yml)), across Python
+3.11 and 3.12.
+
+Only the market server needs `yfinance`, which pulls in pandas and numpy, so it
+is an optional extra rather than a core dependency — `uv sync --extra market` if
+you want it locally. The MCP configs launch each server with its own
+dependencies, so the servers work regardless.
 
 ## Use it
 
@@ -72,16 +96,31 @@ research/names/<TICKER>/      all work product for a name
 research/_templates/memo.md   the fixed memo structure
 universe/coverage.md          coverage, kills, screen history
 docs/architecture.md          how the layers fit together
+.claude-plugin/               plugin + marketplace manifests
 tests/                        offline tests for the MCP servers
 ```
 
-## Calibrate before real use
+## The mandate
 
-`CLAUDE.md` ships with a defensible starting position, not the fund's actual
-one. Sections marked **[CALIBRATE]** — mandate, universe, valuation framework —
-encode opinions you should replace with your own. The gates and kill criteria
-in §3 and §4 are the ones that will actually stop you from losing money; edit
-them deliberately.
+Calibrated, not seeded — `CLAUDE.md` encodes the actual book:
+
+- **Quality compounders**, concentrated long, 12–18 names, 2–4 year holds.
+- **All caps, all sectors.** There is no market-cap band and no sector
+  exclusion list. Exclusions are properties of the business — no earnings power
+  yet, or economics that cannot be tied to filings.
+- **15% 3-year IRR** in the base case, bear case losing under 25%.
+
+Because the universe spans banks and miners as well as software, the six
+quality gates are **type-specific**. Every name is classified A (recurring),
+B (asset-heavy), C (financial) or D (resource) before any gate is scored, and
+the type selects the gate thresholds, the valuation metric, and the extra kill
+criteria. Scoring a bank on gross margin or a miner on recurring revenue is not
+conservative — it is meaningless, and it throws away good names for bad reasons.
+
+Size discipline comes from a **per-name liquidity ceiling** rather than a cap
+floor: `10 trading days × 25% × 20-day median dollar volume`. A $120M name is
+not excluded for being small; it is excluded when the position you want does
+not fit in the tape.
 
 ## Data sources
 

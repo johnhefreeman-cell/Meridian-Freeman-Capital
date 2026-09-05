@@ -3,11 +3,24 @@ name = "meridian-freeman-capital"
 version = "0.1.0"
 description = "Diligence workspace for Meridian Freeman Capital"
 requires-python = ">=3.11"
+
+# Core: what the EDGAR and FRED servers need, and what the test suite imports.
 dependencies = [
     "mcp>=2.1.0",
     "httpx>=0.27",
-    "yfinance>=0.2.40",
 ]
+
+[project.optional-dependencies]
+# Only the market server needs yfinance, which drags in pandas and numpy.
+# Kept out of the default install so tests and CI stay fast.
+market = ["yfinance>=0.2.40"]
+
+[dependency-groups]
+dev = ["pytest>=8"]
 
 [tool.uv]
 package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -23,14 +23,28 @@ Read `CLAUDE.md` and the base-facts file first.
    material rights, significant financing components, variable consideration
    estimates. Note any change in policy or estimate versus the prior year.
 
-3. **Durability.** CLAUDE.md §3 gate 1 requires ≥70% recurring, contracted, or
-   demonstrably repeat. Find the disclosure that proves the number — RPO,
-   deferred revenue, backlog, subscription share, renewal rate. If the company
-   does not disclose enough to establish it, the gate is `UNKNOWN`, not `PASS`.
+3. **Durability.** Score gate 1 against the **assigned business type's column**
+   in CLAUDE.md §3.1 — the base-facts file states the type; do not re-derive it
+   and do not default to Type A:
+   - **A:** ≥70% recurring or contracted. Evidence: RPO, deferred revenue,
+     subscription share, net revenue retention.
+   - **B:** ≥50% repeat, or aftermarket attach ≥30% of gross profit. Evidence:
+     backlog, service/parts revenue split, installed base.
+   - **C:** deposit or premium persistence ≥90%, renewal retention disclosed.
+     Evidence: deposit beta and runoff, policy renewal rates, AUM flows.
+   - **D:** reserve life ≥10 years or ≥50% of volume contracted. Evidence:
+     reserve statement, offtake agreements, hedge book.
+
+   If the company does not disclose enough to establish it, the gate is
+   `UNKNOWN`, not `PASS`.
 
 4. **Cash conversion.** Build 12 quarters of: revenue, DSO, deferred revenue,
    unbilled receivables, OCF, FCF, net income. Revenue growing faster than cash
-   collection is the tell. Compute FCF/NI (gate 3, ≥0.8).
+   collection is the tell. Compute FCF/NI (gate 3, ≥0.8) for types A and B.
+   For **C**, cash conversion is not the test — score reserve-release
+   dependence, provisions versus through-cycle net charge-offs, and realized
+   gains as a share of pre-tax income. For **D**, restate FCF/NI at mid-cycle
+   price and label the deck `[EST]`.
 
 5. **Organic versus acquired.** Strip acquisition contribution. If the company
    does not disclose it, estimate from the deal announcements and label `[EST]`
@@ -44,8 +58,9 @@ evidence / Cash conversion table (12 quarters) / Organic vs. acquired /
 Gates 1 and 3 verdict with citations`.
 
 Return a 5-line summary: recurring revenue % and the disclosure proving it,
-largest customer % and contract term, FCF/NI 3-year average, organic growth
-rate, and any kill criteria tripped.
+largest customer % and contract term (types A and B) or the type's equivalent
+concentration measure, the gate 3 result in the type's terms, organic growth
+rate, and any kill criteria tripped — universal **and** type-specific.
 
 ## Never
 

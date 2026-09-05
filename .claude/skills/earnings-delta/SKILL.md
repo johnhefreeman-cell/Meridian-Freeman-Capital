@@ -30,9 +30,15 @@ in that order.
    risk factors and MD&A framing against the prior quarter — new language is
    signal. Hand off to `/filing-diff` if the text comparison is the main event.
 
-6. **Check cash conversion.** FCF/NI for the quarter and TTM against the
-   CLAUDE.md §3 gate of ≥0.8. A widening gap is the single most common early
-   warning; if it widened, find the working-capital line responsible.
+6. **Check earnings quality, in the type's terms** (CLAUDE.md §3.1 gate 3).
+   - **A / B:** FCF/NI for the quarter and TTM against the ≥0.8 gate. A
+     widening gap is the single most common early warning; if it widened, find
+     the working-capital line responsible.
+   - **C:** reserve build or release and its share of pre-tax income, provision
+     versus net charge-offs, and any realized-gain contribution. A quarter made
+     by a release is not a quarter.
+   - **D:** FCF/NI restated at mid-cycle price, not the realized price. A print
+     flattered by spot is not evidence of earnings power.
 
 ## Output
 

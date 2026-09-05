@@ -9,10 +9,18 @@ The full workup. This is the skill that spends real time — it fans out the
 Layer 4 research team, then converges the results into a memo in the
 CLAUDE.md §6 structure.
 
-## Step 0 — Mandate check
+## Step 0 — Mandate check and business type
 
 Confirm the name is inside CLAUDE.md §2. If it is out of mandate, say so and
 stop. Do not do the work and mention the problem afterward.
+
+Then **assign the business type** (CLAUDE.md §3.0): A recurring, B asset-heavy,
+C financial, or D resource. State it explicitly and justify it in one line. The
+type selects the gate column, the valuation metric, and the type-specific kill
+criteria — get it wrong and every downstream step is confidently wrong. A name
+that plausibly fits two types is tested against the stricter. For a
+multi-segment business, list every segment above 25% of earnings and its type;
+each is scored separately.
 
 ## Step 1 — Establish the base facts once
 
@@ -21,8 +29,14 @@ Do this *before* fanning out, so all five agents reason from the same numbers:
 - `edgar.company_profile` — CIK, SIC, fiscal year end
 - `edgar.list_filings` — last 3 10-Ks, last 4 10-Qs, last DEF 14A
 - `market.quote` — price, market cap, EV, current multiples
-- 3 years of revenue, gross profit, operating income, OCF, capex, share count
-  via `edgar.xbrl_concept`
+- `market.price_history` — 20-day median daily dollar volume, for the §2.1
+  liquidity ceiling
+- 3 years of the type's core lines via `edgar.xbrl_concept`:
+  - **A / B:** revenue, gross profit, operating income, OCF, capex, share count
+  - **C:** net interest income, provisions, net charge-offs, tangible common
+    equity, CET1, book value per share, share count
+  - **D:** production volumes, realized price, cash cost per unit, reserves,
+    maintenance vs. growth capex, share count
 
 Write these to `research/names/<TICKER>/00-base-facts.md`. Every agent reads
 this file first. This is what stops five agents from producing five different
@@ -46,13 +60,16 @@ and the instruction to cite every figure.
 
 ## Step 3 — Score the six gates
 
-Using the agents' output, fill the CLAUDE.md §3 table. `PASS / FAIL / UNKNOWN`
-with a citation for each. **`UNKNOWN` is not `PASS`** — it is an open item that
-must be listed as such.
+Using the agents' output, fill the CLAUDE.md §3.1 table **against the assigned
+type's column**. `PASS / FAIL / UNKNOWN` with a citation for each.
+**`UNKNOWN` is not `PASS`** — it is an open item that must be listed as such.
+
+Then apply the §2.1 liquidity ceiling and record the implied max position.
 
 ## Step 4 — Run the kill criteria
 
-Every item in CLAUDE.md §4, explicitly, each with the evidence checked. Any
+Every item in CLAUDE.md §4 — the universal list **plus the assigned type's
+list** — explicitly, each with the evidence checked. Any
 single trip ends the work: write `research/names/<TICKER>/KILL.md` with the
 trigger, the evidence, and the date, then report the kill and stop. Do not
 soften a kill because the rest of the work was good — that is the entire
