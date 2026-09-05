@@ -19,9 +19,19 @@ ROOT = Path(__file__).resolve().parents[1]
 CLAUDE_MD = (ROOT / "CLAUDE.md").read_text()
 TYPES = ("A", "B", "C", "D")
 
+# Doctrine files only. research/names/ holds per-company workpapers where any
+# dollar figure may legitimately appear — the first real workup tripped
+# test_no_market_cap_band_survives on "$300M", which was a forward-contract
+# notional, not the retired size band. Scanning research output for doctrine
+# strings is a category error: these tests guard what the fund believes, not
+# what a filing says.
+DOCTRINE_DIRS = (".claude", "docs", "universe", "research/_templates")
+
 MARKDOWN = sorted(
     p for p in ROOT.rglob("*.md")
     if ".git" not in p.parts and ".venv" not in p.parts
+    and (p.parent == ROOT
+         or any(str(p.relative_to(ROOT)).startswith(d) for d in DOCTRINE_DIRS))
 )
 
 
