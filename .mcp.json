@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "edgar": {
+      "command": "uv",
+      "args": ["run", "--quiet", "--with", "mcp>=2.1.0", "--with", "httpx",
+               "python", "mcp/edgar_server.py"],
+      "env": {
+        "SEC_EDGAR_USER_AGENT": "${SEC_EDGAR_USER_AGENT:-Meridian Freeman Capital research@example.com}"
+      }
+    },
+    "market": {
+      "command": "uv",
+      "args": ["run", "--quiet", "--with", "mcp>=2.1.0", "--with", "yfinance>=0.2.40",
+               "python", "mcp/market_server.py"]
+    },
+    "fred": {
+      "command": "uv",
+      "args": ["run", "--quiet", "--with", "mcp>=2.1.0", "--with", "httpx",
+               "python", "mcp/fred_server.py"],
+      "env": { "FRED_API_KEY": "${FRED_API_KEY}" }
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}
