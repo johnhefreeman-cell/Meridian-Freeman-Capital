@@ -122,21 +122,33 @@ were within 0.6% of the 52-week high**, and that this happened **while the
 company cut its own buyback by roughly 75%**. Insiders selling as the issuer
 stops buying is the specific pattern the criterion exists to catch.
 
-**Two dissents are logged, either of which would reverse this kill:**
+**Two dissents were logged. The first is now resolved — against AMAT.**
 
-1. **The unchecked 10b5-1 box may be a filing-agent artefact.** `aff10b5One = 0`
-   is a checkbox on the Form 4 XML, and some filing agents leave it unset even
-   for genuine plan sales. **Resolve by checking Item 408(a) disclosures in the
-   FY26 10-Qs**, where plan adoptions must be reported separately. If the plans
-   are there, the carve-out applies and the discretionary total collapses.
-2. **The December 2020 Value Creation Awards fully vested at end-FY25**, which
-   is an ordinary reason to diversify. It explains a large sale. It does not
-   explain the CFO, CTO, Controller and two directors all participating, nor
-   the concentration into a nine-week window at the high.
+1. ~~The unchecked 10b5-1 box may be a filing-agent artefact.~~ **RESOLVED.**
+   The filing analyst found **three independent confirmations** that no plan
+   exists: `aff10b5One = 0` on all **90** Form 4s since 2024-09; **no footnote
+   on any filing references a plan**; and — decisively — **seven consecutive
+   filings state that "no director or officer… adopted or terminated a 'Rule
+   10b5-1 trading arrangement'."** That is the Item 408(a) check this file
+   called for, and the company affirmatively disclosed that the plans do not
+   exist. The carve-out is unavailable on the company's own statement, not on
+   an inference from a checkbox.
+2. **The December 2020 Value Creation Awards fully vested at end-FY25** — an
+   ordinary reason to diversify. It explains a large sale. It does not explain
+   the CFO, CTO, Controller and two directors all participating, nor the
+   concentration into a nine-week window at the high. **Still open**, and it
+   mitigates motive without touching the criterion, which is a disclosure test.
 
-**The kill stands on the filed record as it reads today.** Item 1 is a specific,
-cheap check that could overturn it, and it should be run before any action is
-taken on the position.
+The bull agent raised a third: AMAT's filing agent **has never checked the box
+since 2023**, and there was a similar June-2024 cluster. It then answered its
+own point — **§4 is a disclosure test, not an inference test** — and the Item
+408(a) statements settle it regardless.
+
+**The kill stands, and the cheap check that could have overturned it has been
+run.**
+
+Context worth recording: **the CEO's only purchase in two years was $6.87M at
+~$137.50 on 2025-04-03.** He sold at $700–736.
 
 ## Management: graded C, on an engineered beat
 
@@ -236,6 +248,25 @@ defines contracts as "signed purchase orders, master agreements, and sales
 orders"; RPO with original duration ≥1 year is **$1.7bn, 6.0% of revenue**; and
 backlog is explicitly cancellable.
 
+### Five disclosure removals, each where its metric turned
+
+The filing analyst verified against raw HTML, with all seven documents paged to
+completion:
+
+| Removed | In the period that |
+| --- | --- |
+| Named ≥10% customers — *"Samsung Electronics 12% / Taiwan Semiconductor 11%"* became *"two customers accounted for approximately 19% and 15%"* | the top customer went **12% → 19%**, now 20% |
+| The backlog **prior-year comparative column** | Semiconductor Systems backlog fell **−14.0%** (−36.1% over two years) while that segment's revenue rose |
+| **Receivables factoring de-quantified** — *"We sold $215 million and $324 million"* became *"were not material"*, then the paragraph was deleted entirely a quarter later | AR consumed **$2,508M** of cash in 9M FY26 against $538M the prior year |
+| **Region-by-region MD&A** — four mentions in Q3 FY25, zero across all three FY26 10-Qs | China revenue fell **−15.7%** in FY25 |
+| Display de-segmented | — |
+
+**The fair counter, recorded:** the FY25 10-K was a genuine broad overhaul that
+also *added* disclosure — ASU 2023-07 segment expense detail, the Singapore tax
+reversal, the OBBBA valuation allowance. The removals have an innocent joint
+explanation. *What is not innocent is that three of the five landed exactly
+where the metric turned.*
+
 **And the counterparties were de-identified.** "Samsung" and "Taiwan
 Semiconductor" appear **zero times** in the FY25 10-K and the 3Q26 10-Q, against
 five times in FY24. The percentages still tie to a filing; the names no longer
@@ -243,6 +274,34 @@ do.
 
 That is the second semiconductor name in two workups to remove customer
 identification disclosure while concentration stayed high.
+
+## Even the bull case cannot clear the hurdle
+
+The bull agent built the strongest available case and returned **+14.7%** — a
+bull IRR that **does not reach the §5 15% requirement**. Base case **+2.4%**.
+Bear **−41.5%**.
+
+Its mechanism is real and worth keeping: **AGS is a genuine counter-cyclical
+earnings floor.** In the FY19 downcycle AGS operating income moved **−0.1%**
+($1,102M → $1,101M) while total operating income fell **25.4%**. AGS backlog
+compounded **+64.8%** (4,335 → 7,141, FY21→FY25) while Semiconductor Systems
+backlog fell 44.0% from its FY22 peak, and AGS is now **47.6% of company
+backlog — larger than the equipment segment for the first time on record.**
+
+But an earnings floor is not an earnings majority, which is why gate 1 still
+fails. And at $454.71 the name is **31.8× EV/FY26E EBIT on a 1.64% FCF yield**.
+The bull agent's own verdict: *confidence low, the name should not be worked
+further*, with a recommendation to open this file.
+
+One more note it made on the framing: the $739.67 peak the 39% drawdown is
+measured from **was itself ~19× revenue.**
+
+## One more earnings-quality flag
+
+The Q3 FY26 beat is **largely tax** — effective rate **12.7% against 30.6%** a
+year earlier, on new Singapore incentives that AMAT states begin expiring in
+fiscal 2030. The filing analyst puts 9M FY26 **FCF/NI at ~0.49** against the 0.8
+gate, consistent with the deterioration recorded below.
 
 ## What the kill discards
 
