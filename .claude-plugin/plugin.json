@@ -1,0 +1,30 @@
+{
+  "name": "meridian-diligence",
+  "displayName": "Meridian Diligence",
+  "version": "0.1.0",
+  "description": "Fundamental equity diligence: quality gates, kill criteria, SEC filing pipeline, and a parallel research team.",
+  "author": {
+    "name": "Meridian Freeman Capital"
+  },
+  "repository": "https://github.com/johnhefreeman-cell/Meridian-Freeman-Capital",
+  "license": "UNLICENSED",
+  "keywords": ["research", "equity", "diligence", "sec", "edgar", "valuation"],
+  "skills": "./.claude/skills/",
+  "agents": "./.claude/agents/",
+  "mcpServers": "./.claude-plugin/mcp.json",
+  "userConfig": {
+    "sec_edgar_user_agent": {
+      "type": "string",
+      "title": "SEC EDGAR User-Agent",
+      "description": "Contact string sent on every EDGAR request, e.g. 'Jane Doe jane@fund.com'. SEC blocks or throttles requests without real contact information.",
+      "required": true
+    },
+    "fred_api_key": {
+      "type": "string",
+      "title": "FRED API key",
+      "description": "Optional. Free key from https://fredaccount.stlouisfed.org/apikeys. Only needed for the macro server.",
+      "sensitive": true,
+      "required": false
+    }
+  }
+}

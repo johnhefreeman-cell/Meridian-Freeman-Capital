@@ -21,10 +21,24 @@ CLAUDE.md ──► Skills ──┬──► MCP Servers ──┐
 
 ## Setup
 
+Two ways to load it. **Project mode** — clone and open in Claude Code:
+
 ```bash
 uv sync                       # or: pip install -e .
 cp .env.example .env          # then fill in SEC_EDGAR_USER_AGENT (required)
 ```
+
+**Plugin mode** — install once on your account so the skills and agents reach
+every session, Cowork included, with no clone:
+
+```
+/plugin marketplace add johnhefreeman-cell/Meridian-Freeman-Capital@claude/hello-a9jix6
+/plugin install meridian-diligence@meridian-freeman-capital
+```
+
+You are prompted for `sec_edgar_user_agent` on install; the FRED key is
+optional. See [docs/plugin.md](docs/plugin.md) for the difference between the
+two modes and the known limits.
 
 `SEC_EDGAR_USER_AGENT` must contain real contact information — SEC blocks
 requests without it. `FRED_API_KEY` is optional and free.
@@ -72,6 +86,7 @@ research/names/<TICKER>/      all work product for a name
 research/_templates/memo.md   the fixed memo structure
 universe/coverage.md          coverage, kills, screen history
 docs/architecture.md          how the layers fit together
+.claude-plugin/               plugin + marketplace manifests
 tests/                        offline tests for the MCP servers
 ```
 

@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "edgar": {
+      "command": "uv",
+      "args": ["run", "--quiet", "--with", "mcp>=2.1.0", "--with", "httpx",
+               "python", "${CLAUDE_PLUGIN_ROOT}/mcp/edgar_server.py"],
+      "env": {
+        "SEC_EDGAR_USER_AGENT": "${user_config.sec_edgar_user_agent}"
+      }
+    },
+    "market": {
+      "command": "uv",
+      "args": ["run", "--quiet", "--with", "mcp>=2.1.0", "--with", "yfinance>=0.2.40",
+               "python", "${CLAUDE_PLUGIN_ROOT}/mcp/market_server.py"]
+    },
+    "fred": {
+      "command": "uv",
+      "args": ["run", "--quiet", "--with", "mcp>=2.1.0", "--with", "httpx",
+               "python", "${CLAUDE_PLUGIN_ROOT}/mcp/fred_server.py"],
+      "env": {
+        "FRED_API_KEY": "${user_config.fred_api_key}"
+      }
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}
