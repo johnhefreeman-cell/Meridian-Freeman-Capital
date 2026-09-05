@@ -13,10 +13,13 @@ Requests are spaced; the endpoint rate-limits aggressively and answers 429
 without a Retry-After, so failures are retried with backoff and reported rather
 than silently returning short series.
 
-**Adjusted or raw.** Both are stored. `adj` is split- and dividend-adjusted;
-`close` is as printed. Indicators default to `adj` because a split in the
-window otherwise puts a false cliff in the average, but the two are compared
-before any signal is reported — see `scripts/signals.py`.
+**Full bars.** Each row is `[epoch, open, high, low, close, adj, volume]`.
+The open, low and volume are not decoration: a limit order's fill depends on
+whether the session traded down to it, and §2.1's position ceiling is computed
+from dollar volume. `adj` is split- and dividend-adjusted; `close` is as
+printed. Indicators default to `adj` because a split in the window otherwise
+puts a false cliff in the average, but the two are compared before any signal
+is reported — see `scripts/signals.py`.
 
 Usage:
     uv run python scripts/daily_prices.py AAPL MSFT --years 6
@@ -75,12 +78,22 @@ def _request(symbol: str, years: int) -> dict:
     raise RuntimeError(f"{symbol}: {last}")
 
 
+BAR_FIELDS = ("open", "high", "low", "close", "adj", "volume")
+
+
 def fetch(ticker: str, years: int = 6, root: str = CACHE_DIR,
           refresh: bool = False) -> dict:
-    """{ticker, rows: [[epoch, close, adj], ...]} — cached unless `refresh`."""
+    """{ticker, rows: [[epoch, open, high, low, close, adj, volume], ...]}.
+
+    Cached unless `refresh`. A cache written before full bars existed is
+    refetched rather than used, so a short row never silently becomes a
+    missing low.
+    """
     path = cache_path(ticker, root)
     if not refresh and os.path.exists(path) and os.path.getsize(path) > 2000:
-        return json.load(open(path))
+        cached = json.load(open(path))
+        if cached.get("rows") and len(cached["rows"][0]) == 1 + len(BAR_FIELDS):
+            return cached
 
     symbol = to_yahoo(ticker)
     payload = _request(symbol, years)
@@ -89,13 +102,17 @@ def fetch(ticker: str, years: int = 6, root: str = CACHE_DIR,
     quote = result["indicators"]["quote"][0]["close"]
     adjusted = (result.get("indicators", {}).get("adjclose") or [{}])[0].get("adjclose")
 
+    bars = result["indicators"]["quote"][0]
+    volumes = bars.get("volume") or [None] * len(stamps)
     rows = []
     for i, stamp in enumerate(stamps):
-        close = quote[i]
-        adj = adjusted[i] if adjusted and adjusted[i] is not None else close
-        if close is None or adj is None:
+        o, h, l, close = bars["open"][i], bars["high"][i], bars["low"][i], quote[i]
+        if None in (o, h, l, close):
             continue
-        rows.append([int(stamp), round(float(close), 6), round(float(adj), 6)])
+        adj = adjusted[i] if adjusted and adjusted[i] is not None else close
+        rows.append([int(stamp), round(float(o), 6), round(float(h), 6),
+                     round(float(l), 6), round(float(close), 6),
+                     round(float(adj), 6), int(volumes[i] or 0)])
     if not rows:
         raise RuntimeError(f"{symbol}: no usable bars returned")
 
@@ -125,9 +142,34 @@ def fetch_many(tickers, years: int = 6, root: str = CACHE_DIR,
 
 
 def closes(series: dict, field: str = "adj") -> tuple[list[dt.date], list[float]]:
-    idx = 2 if field == "adj" else 1
-    dates = [dt.date.fromtimestamp(r[0]) for r in series["rows"]]
-    return dates, [r[idx] for r in series["rows"]]
+    return dates_of(series), column(series, field)
+
+
+def dates_of(series: dict) -> list[dt.date]:
+    return [dt.date.fromtimestamp(r[0]) for r in series["rows"]]
+
+
+def column(series: dict, field: str) -> list[float]:
+    """One field across every bar. Raises on an unknown name rather than
+    silently returning the wrong column."""
+    if field not in BAR_FIELDS:
+        raise KeyError(f"unknown bar field {field!r}; have {BAR_FIELDS}")
+    idx = 1 + BAR_FIELDS.index(field)
+    return [r[idx] for r in series["rows"]]
+
+
+def dollar_volume(series: dict, window: int = 20) -> float | None:
+    """Median daily dollar volume over the last `window` sessions.
+
+    Uses the printed close, not the adjusted one — §2.1 asks what the tape
+    actually traded, and a dividend-adjusted price understates it."""
+    rows = series["rows"][-window:]
+    if len(rows) < window:
+        return None
+    values = sorted(r[4] * r[6] for r in rows)
+    mid = len(values) // 2
+    return (values[mid] if len(values) % 2
+            else (values[mid - 1] + values[mid]) / 2)
 
 
 def main() -> None:

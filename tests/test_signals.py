@@ -19,12 +19,19 @@ import daily_prices as dp  # noqa: E402
 import signals as sg  # noqa: E402
 
 
-def series_from(closes, start=dt.datetime(2024, 1, 2)):
-    """A cache-shaped payload from a list of closes."""
+def series_from(closes, adj=None, start=dt.datetime(2024, 1, 2)):
+    """A cache-shaped payload of full bars from a list of closes.
+
+    Rows are [epoch, open, high, low, close, adj, volume] — the same shape the
+    fetcher writes, so these tests break if that format changes rather than
+    quietly reading the wrong column.
+    """
     rows = []
     for i, c in enumerate(closes):
         stamp = int((start + dt.timedelta(days=i)).timestamp())
-        rows.append([stamp, float(c), float(c)])
+        c = float(c)
+        a = float(adj[i]) if adj is not None else c
+        rows.append([stamp, c, c * 1.01, c * 0.99, c, a, 1_000_000])
     return dict(ticker="TEST", symbol="TEST", rows=rows)
 
 
@@ -245,19 +252,13 @@ def test_agreeing_series_report_agreement():
 def test_disagreement_between_adjusted_and_raw_is_surfaced():
     """A dividend-adjusted average can sit on the other side of today's close."""
     n = 260
-    raw = [100.0] * n + [101.0]
     adj = [90.0] * n + [101.0]              # adjusted history sits lower
-    rows = [[int(dt.datetime(2024, 1, 2).timestamp()) + i * 86400, raw[i], adj[i]]
-            for i in range(len(raw))]
-    got = sg.evaluate_both(dict(ticker="DIV", symbol="DIV", rows=rows))
+    got = sg.evaluate_both(series_from([100.0] * n + [101.0], adj=adj))
     assert got["above_sma"] is True         # against the adjusted average
     assert got["raw"]["above_sma"] is True
     assert got["agrees"] is True            # both above here
     # now push the raw history above today's close so the two disagree
-    raw2 = [110.0] * n + [101.0]
-    rows2 = [[int(dt.datetime(2024, 1, 2).timestamp()) + i * 86400, raw2[i], adj[i]]
-             for i in range(len(raw2))]
-    got2 = sg.evaluate_both(dict(ticker="DIV", symbol="DIV", rows=rows2))
+    got2 = sg.evaluate_both(series_from([110.0] * n + [101.0], adj=adj))
     assert got2["above_sma"] is True
     assert got2["raw"]["above_sma"] is False
     assert got2["agrees"] is False
@@ -278,8 +279,17 @@ def test_ordinary_tickers_pass_through_untouched():
 
 
 def test_closes_selects_the_requested_field():
-    rows = [[int(dt.datetime(2024, 1, 2).timestamp()) + i * 86400, 10.0, 9.0]
-            for i in range(3)]
-    s = dict(rows=rows)
+    s = series_from([10.0] * 3, adj=[9.0] * 3)
     assert dp.closes(s, "close")[1] == [10.0, 10.0, 10.0]
     assert dp.closes(s, "adj")[1] == [9.0, 9.0, 9.0]
+
+
+def test_column_rejects_an_unknown_field_instead_of_guessing():
+    with pytest.raises(KeyError):
+        dp.column(series_from([10.0] * 3), "vwap")
+
+
+def test_column_reads_the_high_and_low_the_fill_logic_depends_on():
+    s = series_from([100.0] * 3)
+    assert dp.column(s, "high")[0] == pytest.approx(101.0)
+    assert dp.column(s, "low")[0] == pytest.approx(99.0)

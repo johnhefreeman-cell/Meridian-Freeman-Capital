@@ -119,6 +119,37 @@ def evaluate(series: dict, field: str = "adj",
     )
 
 
+def dips(series: dict, field: str = "adj",
+         sma_days: int = SMA_DAYS, rsi_days: int = RSI_DAYS,
+         rsi_below: float = RSI_BUY_BELOW) -> list[dict]:
+    """Every bar in the series where the dip criteria hold.
+
+    A **dip** is one bar, not a state: the close is above the 200-day average
+    and RSI(14) is below 40 on that bar. Consecutive bars can each be a dip,
+    so `first_of_run` marks the bar the condition became true — that is the
+    one an order should be built from, since the later bars in a run are the
+    same pullback re-announcing itself, not new information.
+    """
+    dates, values = dp.closes(series, field)
+    averages = sma(values, sma_days)
+    strengths = rsi(values, rsi_days)
+
+    out: list[dict] = []
+    previous = False
+    for i, close in enumerate(values):
+        avg, strength = averages[i], strengths[i]
+        if avg is None or strength is None:
+            previous = False
+            continue
+        hit = close > avg and strength < rsi_below
+        if hit:
+            out.append(dict(index=i, date=dates[i], close=close, sma=avg,
+                            rsi=strength, distance=close / avg - 1,
+                            first_of_run=not previous))
+        previous = hit
+    return out
+
+
 def evaluate_both(series: dict, **kw) -> dict | None:
     """Evaluate on adjusted and raw closes, and flag any disagreement.
 

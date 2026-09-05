@@ -261,5 +261,21 @@ An uncited memo is not a draft. It is discarded.
 - Never write to `research/names/<TICKER>/` for a name outside the universe
   without saying it is out of mandate first.
 - Never fabricate a filing citation. Missing data is reported as missing.
-- This repo produces **research**, not advice and not orders. No output here
-  is a recommendation to any third party.
+- This repo produces **research**, and — since the dip rule was added — **order
+  tickets for the holder's own execution**. Neither is advice. No output here is
+  a recommendation to any third party, and nothing here is transmitted to a
+  broker: a ticket is a written intention the holder chooses to act on or not.
+
+### 10.1 Orders and the gates
+
+- A generated order is a *proposal*, and it is subject to everything above. A
+  name with a kill logged under §4, or a verdict recording a gate or §5 failure,
+  is emitted **BLOCKED** with the reason attached. It is never silently dropped
+  and never silently placed. If a price pattern could overrule the gates, the
+  gates would be decoration.
+- Every ticket carries the §2.1 liquidity ceiling. A ticket with no quantity is
+  incomplete, not ready — say `UNSET` rather than inventing a size.
+- The signal bar's close is knowable only after that close, so an order priced
+  at it is a **limit working the next session**, never a fill at that close.
+  Any backtest that assumes otherwise is overstating the result, and the
+  difference is measured in `docs/dip-orders.md` rather than asserted away.

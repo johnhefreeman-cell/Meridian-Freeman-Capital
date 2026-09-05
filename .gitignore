@@ -24,3 +24,7 @@ Thumbs.db
 # Cached vendor price data. The repo is public; the fetcher reproduces this
 # from the source rather than redistributing it.
 data/daily/
+
+# Generated order tickets. Trading intent is more sensitive than price data and
+# this repo is public; the generator is versioned, the tickets are not.
+orders/
