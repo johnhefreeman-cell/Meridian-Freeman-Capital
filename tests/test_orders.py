@@ -156,6 +156,39 @@ def test_a_name_with_no_research_at_all_is_not_blocked(tmp_path):
     assert od.diligence_block("NOPE", root=tmp_path) is None
 
 
+def test_the_block_reason_is_trimmed_on_a_word_boundary(tmp_path):
+    """A reason cut mid-word reads as truncated data, and it goes on a ticket."""
+    folder = tmp_path / "LONG"
+    folder.mkdir()
+    (folder / "KILL.md").write_text(
+        "# LONG\n\n**Trigger:** " + "concentration " * 40 + "\n")
+    reason = od.diligence_block("LONG", root=tmp_path)
+    tail = reason.split(" · ", 1)[1]
+    assert tail.endswith("…")
+    assert not tail.rstrip("…").endswith("concentratio")   # no mid-word cut
+
+
+def test_the_block_reason_reads_a_trigger_wrapped_across_lines(tmp_path):
+    """Verdict files hard-wrap their fields; a one-line read truncates mid-phrase."""
+    folder = tmp_path / "WRAP"
+    folder.mkdir()
+    (folder / "KILL.md").write_text(
+        "# WRAP\n\n**Date:** 2026-09-05\n"
+        "**Trigger:** CLAUDE.md §4 — insider selling above the\n"
+        "threshold with no plan disclosed at adoption\n"
+        "**Breach:** 17x\n")
+    reason = od.diligence_block("WRAP", root=tmp_path)
+    assert "no plan disclosed at adoption" in reason
+    assert "17x" not in reason           # stops at the next field
+
+
+def test_the_block_reason_strips_markdown_emphasis(tmp_path):
+    folder = tmp_path / "EMPH"
+    folder.mkdir()
+    (folder / "KILL.md").write_text("# EMPH\n\n**Trigger:** *net insider selling*\n")
+    assert "*" not in od.diligence_block("EMPH", root=tmp_path)
+
+
 def test_blocking_survives_the_hyphen_used_by_the_price_source(tmp_path):
     """The price feed spells it BRK-B; the research folder is BRK.B."""
     folder = tmp_path / "BRK.B"

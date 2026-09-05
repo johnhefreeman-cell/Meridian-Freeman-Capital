@@ -77,15 +77,36 @@ def diligence_block(ticker: str, root: Path | None = None) -> str | None:
     for name, label in (("KILL.md", "KILLED"), ("20-verdict.md", "FAILED VERDICT")):
         path = folder / name
         if path.exists():
-            headline = ""
-            for line in path.read_text(errors="replace").splitlines():
-                line = line.strip()
-                if line.startswith("**Trigger:**") or line.startswith("**Outcome:**"):
-                    headline = line.split("**", 2)[-1].strip(": ").strip()
-                    break
             return f"{label} — see research/names/{folder.name}/{name}" + (
-                f" · {headline[:160]}" if headline else "")
+                f" · {reason}" if (reason := _headline(path)) else "")
     return None
+
+
+def _headline(path: Path, limit: int = 150) -> str:
+    """The Trigger/Outcome line of a verdict file, trimmed on a word boundary.
+
+    Cutting mid-word produces a reason that reads as truncated data rather than
+    a summary, and this string ends up on an order ticket.
+    """
+    parts: list[str] = []
+    collecting = False
+    for line in path.read_text(errors="replace").splitlines():
+        line = line.strip()
+        if not collecting and line.startswith(("**Trigger:**", "**Outcome:**")):
+            parts.append(line.split("**", 2)[-1].strip(": ").strip())
+            collecting = True
+            continue
+        if collecting:
+            # These fields wrap across lines; stop at a blank line or the next one.
+            if not line or line.startswith("**") or line.startswith("#"):
+                break
+            parts.append(line)
+    text = " ".join(parts)
+    text = text.replace("*", "").replace("  ", " ").strip()
+    if len(text) <= limit:
+        return text
+    cut = text[:limit].rsplit(" ", 1)[0]
+    return cut.rstrip(",;:—- ") + "…"
 
 
 def liquidity_ceiling(series: dict) -> float | None:
