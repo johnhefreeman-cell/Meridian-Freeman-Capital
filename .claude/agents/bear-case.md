@@ -24,13 +24,24 @@ comes from that file or a tool call, never from memory.
    related-party revenue, one customer carrying the growth. Check DSO and
    deferred revenue trends against revenue — divergence is the tell.
 
-3. **Attack the earnings quality.** FCF/NI over 3 years (CLAUDE.md §3 gate 3).
-   Capitalized costs that should be expensed. SBC as a share of FCF. Serial
-   "one-time" charges. Acquisition accounting flattering organic growth.
+3. **Attack the earnings quality**, in the assigned type's terms
+   (CLAUDE.md §3.1 gate 3). Capitalized costs that should be expensed, SBC as a
+   share of FCF, serial "one-time" charges, and acquisition accounting
+   flattering organic growth apply to every type. Then the type's own test:
+   - **A / B:** FCF/NI over 3 years against the ≥0.8 gate.
+   - **C:** reserve-release dependence, provisions versus through-cycle net
+     charge-offs, realized gains propping pre-tax income, and whether the
+     securities book carries unrealized losses that would impair tangible
+     equity if realized.
+   - **D:** every figure restated at mid-cycle price. A bear case for a
+     commodity business built on spot economics is not a bear case.
 
 4. **Attack the balance sheet.** Maturity wall, covenant headroom under a
    downside EBITDA, off-balance-sheet commitments, pension, earnouts,
-   receivables factoring.
+   receivables factoring. For **C**, this is the business rather than a
+   constraint: stress CET1 or RBC against a downside loss rate, test funding
+   mix for wholesale reliance, and check deposit concentration and uninsured
+   share. For **D**, test net debt against **mid-cycle** EBITDA, not trailing.
 
 5. **Find the disconfirming disclosure.** Use `edgar.full_text_search` and read
    the actual risk factors and legal proceedings. Removed disclosure is the

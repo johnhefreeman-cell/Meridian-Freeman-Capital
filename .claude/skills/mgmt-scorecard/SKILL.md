@@ -32,7 +32,13 @@ you can tabulate: what they said would happen, and what happened.
 
 6. **Check alignment.** DEF 14A via `edgar.list_filings` form `DEF 14A`:
    what is comp actually tied to? Revenue and "adjusted EBITDA" targets pay
-   for empire-building. Per-share value and ROIC do not (CLAUDE.md §3, gate 5).
+   for empire-building. Per-share value and ROIC do not (CLAUDE.md §3.1,
+   gate 5). The disqualifying metric depends on the business type:
+   - **A / B:** revenue or "adjusted" anything without a per-share link
+   - **C:** asset growth, loan growth, or AUM growth — these pay management to
+     lever the balance sheet with shareholders' capital
+   - **D:** production volume or reserves added — these pay management to grow
+     into a falling price deck
 
 7. **Check the trades.** `edgar.insider_transactions` — codes **P** and **S**
    only. Grants (A), option exercises (M), and tax withholding (F) are not

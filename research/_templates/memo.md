@@ -2,6 +2,9 @@
 
 **Date:** YYYY-MM-DD · **Analyst:** · **Price:** $X.XX · **Mkt cap:** $X,XXXm ·
 **EV:** $X,XXXm · **Status:** DRAFT | ACTIVE | KILLED
+**Business type:** A · Recurring | B · Asset-heavy | C · Financial | D · Resource
+*(CLAUDE.md §3.0 — selects the gate column, the valuation metric, and the
+type-specific kill criteria. Justify in one line.)*
 
 > Structure fixed by CLAUDE.md §6. Do not reorder. Every figure carries a
 > citation in the form `[10-Q 2025-Q3, p.14]`. Uncited figures are marked
@@ -25,14 +28,17 @@ customer acquisition, retention, pricing power.>
 
 ## 4. The Six Gates
 
-| # | Gate | Verdict | Evidence |
-| --- | --- | --- | --- |
-| 1 | Revenue durability ≥70% recurring | PASS/FAIL/UNKNOWN | `[cite]` |
-| 2 | Unit economics | PASS/FAIL/UNKNOWN | `[cite]` |
-| 3 | Cash conversion FCF/NI ≥0.8 | PASS/FAIL/UNKNOWN | `[cite]` |
-| 4 | Balance sheet ≤3.0x net debt/EBITDA | PASS/FAIL/UNKNOWN | `[cite]` |
-| 5 | Incentives aligned | PASS/FAIL/UNKNOWN | `[cite]` |
-| 6 | Reinvestment runway | PASS/FAIL/UNKNOWN | `[cite]` |
+Scored against the assigned type's column in CLAUDE.md §3.1. Write the test
+you actually applied — not the Type A default — so the memo is auditable.
+
+| # | Gate | Test applied (this type) | Result | Verdict | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Revenue durability | | | PASS/FAIL/UNKNOWN | `[cite]` |
+| 2 | Unit economics | | | PASS/FAIL/UNKNOWN | `[cite]` |
+| 3 | Earnings quality | | | PASS/FAIL/UNKNOWN | `[cite]` |
+| 4 | Balance sheet | | | PASS/FAIL/UNKNOWN | `[cite]` |
+| 5 | Incentives | | | PASS/FAIL/UNKNOWN | `[cite]` |
+| 6 | Reinvestment runway | | | PASS/FAIL/UNKNOWN | `[cite]` |
 
 **Open items:** <every UNKNOWN, with what would resolve it and by when.>
 
@@ -53,7 +59,9 @@ customer acquisition, retention, pricing power.>
 | Base | | | | | | |
 | Bull | | | | | | |
 
-- Primary multiple and why (CLAUDE.md §5):
+- Primary multiple for this type and why (CLAUDE.md §5):
+- *(Type D only)* Commodity price deck used, and its source: **[EST]**
+- *(Type C only)* Discounting equity FCF / dividend capacity, not enterprise FCF:
 - Multiple expansion as share of base-case return: __% *(cap: 40%)*
 - Discount rate:
 - Base-case IRR clears 15%: YES/NO · Bear case loses <25%: YES/NO
@@ -70,7 +78,12 @@ customer acquisition, retention, pricing power.>
 
 ## 9. Kill Criteria — this name
 
-Beyond the standing CLAUDE.md §4 list:
+| Set | Result |
+| --- | --- |
+| Universal (CLAUDE.md §4) | none tripped / **<which>** |
+| Type-specific (§4, this type) | none tripped / **<which>** |
+
+Beyond the standing lists:
 
 - [ ] <name-specific trigger>
 - [ ] <name-specific trigger>
@@ -81,6 +94,9 @@ Beyond the standing CLAUDE.md §4 list:
 | --- | --- |
 | Proposed weight | % |
 | Reasoning (tied to the bear case) | |
+| 20-day median daily dollar volume | $Xm |
+| Liquidity ceiling (§2.1: 10d × 25% × ADDV) | $Xm |
+| Proposed position fits inside the ceiling | YES/NO |
 | Max weight on drawdown | % |
 | Review trigger | |
 
