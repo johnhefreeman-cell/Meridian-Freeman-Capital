@@ -99,7 +99,7 @@ and silent when broken:
 - every skill and agent has frontmatter whose `name` matches its filename
 
 ```bash
-uv run --with pytest python -m pytest tests/ -q
+uv run pytest
 ```
 
 Bump `version` in `.claude-plugin/plugin.json` when you change what ships.

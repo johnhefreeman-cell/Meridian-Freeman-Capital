@@ -234,3 +234,45 @@ def test_documented_install_matches_the_manifest_names():
     market = load(".claude-plugin/marketplace.json")
     expected = f"/plugin install {plugin['name']}@{market['name']}"
     assert expected in guide, f"docs do not document the real install: {expected}"
+
+
+# --------------------------------------------------- CI runs what docs claim
+
+CANONICAL_TEST_COMMAND = "uv run pytest"
+
+
+def test_ci_workflow_exists():
+    assert (ROOT / ".github/workflows/tests.yml").is_file(), (
+        "no CI workflow; nothing runs this suite on a pull request"
+    )
+
+
+def test_ci_runs_the_documented_test_command():
+    """If CI and the README drift, one of them is lying about how to run tests."""
+    workflow = (ROOT / ".github/workflows/tests.yml").read_text()
+    readme = (ROOT / "README.md").read_text()
+    assert CANONICAL_TEST_COMMAND in workflow, (
+        f"CI does not run {CANONICAL_TEST_COMMAND!r}"
+    )
+    assert CANONICAL_TEST_COMMAND in readme, (
+        f"README does not document {CANONICAL_TEST_COMMAND!r}"
+    )
+
+
+def test_ci_covers_every_supported_python():
+    """The matrix must not claim less than pyproject promises."""
+    import re
+    workflow = (ROOT / ".github/workflows/tests.yml").read_text()
+    pyproject = (ROOT / "pyproject.toml").read_text()
+    floor = re.search(r'requires-python\s*=\s*">=(\d+)\.(\d+)"', pyproject)
+    assert floor, "pyproject does not pin a minimum Python"
+    minimum = f"{floor.group(1)}.{floor.group(2)}"
+    assert f'"{minimum}"' in workflow, (
+        f"pyproject supports {minimum} but the CI matrix does not test it"
+    )
+
+
+def test_ci_checks_the_shell_script():
+    """scenario.sh has no unit tests; CI must at least parse it."""
+    workflow = (ROOT / ".github/workflows/tests.yml").read_text()
+    assert "bash -n scripts/scenario.sh" in workflow

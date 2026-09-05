@@ -47,8 +47,18 @@ Verify the pipeline from inside Claude Code with `/mcp`; all four servers
 should report connected.
 
 ```bash
-uv run --with pytest python -m pytest tests/ -q
+uv sync          # mcp + httpx + pytest; yfinance is an extra, see below
+uv run pytest
 ```
+
+CI runs the same command on every pull request and push
+([`.github/workflows/tests.yml`](.github/workflows/tests.yml)), across Python
+3.11 and 3.12.
+
+Only the market server needs `yfinance`, which pulls in pandas and numpy, so it
+is an optional extra rather than a core dependency — `uv sync --extra market` if
+you want it locally. The MCP configs launch each server with its own
+dependencies, so the servers work regardless.
 
 ## Use it
 
