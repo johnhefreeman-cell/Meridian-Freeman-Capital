@@ -35,6 +35,91 @@ stock is $454.71 today. Insiders sold, in size, without plans, at the top.
 That is not a judgement about their motives. The criterion was written down in
 advance precisely so it does not require one.
 
+## Confirmed independently — and two reasons it might be wrong
+
+The management agent, working separately, reached the same trigger: $173.2M,
+**17.3× the threshold, zero insider purchases in three years**, `aff10b5One = 0`
+on all eleven sale filings. It added that CEO Dickerson's blocks at **$700–735
+were within 0.6% of the 52-week high**, and that this happened **while the
+company cut its own buyback by roughly 75%**. Insiders selling as the issuer
+stops buying is the specific pattern the criterion exists to catch.
+
+**Two dissents are logged, either of which would reverse this kill:**
+
+1. **The unchecked 10b5-1 box may be a filing-agent artefact.** `aff10b5One = 0`
+   is a checkbox on the Form 4 XML, and some filing agents leave it unset even
+   for genuine plan sales. **Resolve by checking Item 408(a) disclosures in the
+   FY26 10-Qs**, where plan adoptions must be reported separately. If the plans
+   are there, the carve-out applies and the discretionary total collapses.
+2. **The December 2020 Value Creation Awards fully vested at end-FY25**, which
+   is an ordinary reason to diversify. It explains a large sale. It does not
+   explain the CFO, CTO, Controller and two directors all participating, nor
+   the concentration into a nine-week window at the high.
+
+**The kill stands on the filed record as it reads today.** Item 1 is a specific,
+cheap check that could overturn it, and it should be run before any action is
+taken on the position.
+
+## Management: graded C, on an engineered beat
+
+Twelve of twelve quarterly guides beaten, none missed — and **27 of 27 guided
+data points landed above the midpoint**. Non-GAAP EPS beat all twelve times by a
+mean of **+6.16%, almost exactly half the ±$0.18–0.20 band, every quarter.**
+That distribution is not the signature of a predictable business; it is the
+signature of a managed guide. Practical use: underwrite the **low end** of the
+band as base case, the midpoint as bull.
+
+**Non-GAAP gross-margin guidance was discontinued in November 2025 — immediately
+after the only quarter it failed to beat.** Same class of act as MRVL cutting
+its gross-margin comp weight in the year gross margin missed.
+
+**The most damaging item is a public claim contradicted by the company's own
+scorecard.** On 2025-02-13 the CEO told investors Applied was positioned for
+"continued growth and **outperformance** in the years to come"
+`[8-K 0000006951-25-000005]`. The FY25 proxy scored *"Grow wafer fabrication
+equipment market share (measured by VLSI Research)"* at **0.0 out of 1.0**
+`[DEF 14A 0001193125-26-027307]`. Second consecutive year below target. **The
+shortfall was disclosed only in the proxy — never in an earnings release.**
+
+### Gate 5 fails on both limbs
+
+- Insider ownership **0.30%** (2,405,861 of 792.7M shares) against the 3% bar,
+  no owner-operator.
+- Every financial metric in the plan is non-GAAP — an automatic §3.1 failure.
+
+Proxy findings that rhyme with MRVL:
+
+- The FY24 bonus gate of **$5.55 non-GAAP EPS was set below the prior year's
+  actual of $8.05**; FY25's $6.25 was **32% below management's own annualised
+  public guide**.
+- The FY2023 PSU three-year operating-margin target of **29.0% was set 150bps
+  below the 30.5% already delivered in FY22**, and paid **116.67%** for a
+  three-year average of 29.5% that never regained the starting point.
+- **Relative TSR — the only externally verified metric — had its CEO weight cut
+  8.0% → 7.5% → 5.0%**, with the 2.5 points moved to a self-defined "non-GAAP
+  Economic Profit" objective **that scored 1.0 in the year TSR scored 0.0.**
+
+One point where AMAT is **cleaner than MRVL**: gross-margin weight held at 10%
+throughout, so no post-miss weight cut there.
+
+### Serial charges — one quarter from tripping
+
+Non-GAAP add-backs exceeded 15% of GAAP opex in **2 of the last 4 quarters**
+(Q4 FY25 15.1%; Q1 FY26 17.2%, on the **$252.5M BIS settlement**). §4 trips at
+3 of 4. **Monitor Q4 FY26.** Note the BIS settlement is itself export-control
+exposure crystallising into a cash cost.
+
+### A cross-agent flag on gate 1
+
+Effective Q1 FY26 management **moved the 200mm business out of Applied Global
+Services** and began fully allocating corporate costs, restating Q1 FY25 AGS
+revenue **down 15.1%** (1,594.0 → 1,353.0) and AGS non-GAAP operating margin
+down 310bps (28.0% → 24.9%).
+
+The gate 1 aftermarket calculation must therefore run on **recast figures only**.
+The revenue-quality agent states it used recast data; this should be verified
+rather than assumed, since a mixed basis would change the answer.
+
 ## Gate 1 also fails — and my Type B hypothesis was wrong
 
 The base-facts file predicted AMAT would be a clean **Type B** fit, on the
