@@ -35,6 +35,84 @@ stock is $454.71 today. Insiders sold, in size, without plans, at the top.
 That is not a judgement about their motives. The criterion was written down in
 advance precisely so it does not require one.
 
+## The drawdown is off a spike, not a return to normal
+
+**This is the finding that matters most for anyone thinking about entry.**
+
+| | |
+| --- | --- |
+| Non-affiliate market value, 2025-04-27 | **$121.3B** `[FY25 10-K cover]` |
+| Market cap today | **$360.9B** |
+| Change | **+197%** |
+| FY26E revenue change over the same span | **+20.9%** |
+| 39% below the 52-week high | *and still up ~197% in ~16 months* |
+
+Being 39% off the high says nothing about whether the price is low. Price rose
+197% while revenue rose 21%; the drawdown gives back part of a re-rating, not a
+cycle.
+
+**On multiples**, with the market server down, the bear agent anchored on a
+primary source: AMAT's own **disclosed average repurchase prices** divided by
+that year's diluted EPS.
+
+| | Multiple |
+| --- | --- |
+| FY23 | 15.2× |
+| FY24 | 21.9× |
+| FY25 | 18.7× |
+| **Today** | **35.7×** FY26E non-GAAP EPS of $12.75 |
+
+Roughly **double** what the company itself paid across three years.
+
+### §5 disqualifies the position independently of the kill
+
+- **Bear case −74.4%** (3-yr IRR −36.6%) against a **<25%** limit — 3× over.
+- **The base case loses 38.2%.**
+- Holding today's 35.7× **flat** for three years yields a **5.4% IRR**.
+- Reaching the mandated 15% base IRR needs a re-rating to **46.4×** — multiple
+  expansion would be **~150% of base return** against §5's 40% cap.
+
+This fails at $454.71 on the arithmetic alone, before the insider trigger.
+
+### A second kill criterion: a number that cannot be tied to a filing
+
+The 2027 wafer-fab-equipment growth case rests on a **press-release sentence**.
+Backlog is annual-only and **ten months stale** ($15,002M total, of which only
+$7,105M is Semiconductor Systems — roughly four months of coverage), and ASC 606
+RPO is ~$1.0B, **2.9%** of FY26E revenue. There is no filing-tier forward
+visibility to underwrite.
+
+### The juxtaposition
+
+CEO Dickerson sold **$55.55M on 29–30 June 2026 at $700.21–$736.05**, days from
+the $739.67 high. On **13 August** he told the market: *"we expect another strong
+growth year for Applied Materials in 2027."*
+
+### New risk disclosure, absent from the FY25 10-K
+
+The **BIS settlement**: $253M paid, plus a **suspended denial order waived only
+in February 2029**, which AMAT states could *"prohibit us from exporting certain
+of our products outside of the United States"* — against **85% non-US revenue**.
+
+### Where the bear agent argues against itself
+
+Recorded because it partly softens the China case stated further down:
+
+- **China at 28% is already down from a 37.2% FY24 peak** and shrank 2% YoY in
+  Q3. The cliff is partly taken, not pending. AMAT quantifies no
+  export-licence-dependent revenue anywhere, so that risk is **unmodellable from
+  the primary record** rather than large-and-proven.
+- The multiple anchor is derived from transacted buyback prices, not a vendor
+  series — though the conclusion holds even at a 30× terminal.
+- Q4 FY26's ~$41B annualised run rate may not be a peak: three straight beats,
+  and contract liabilities up 27.5%.
+
+### The gross-margin rise is real — third independent confirmation
+
+Non-GAAP GM 50.4% against GAAP 50.3%; only **$11M** of acquisition amortisation
+in Q3 COGS; intangibles net just $315M. **The MRVL trap does not apply here**,
+and three agents tested it separately.
+
 ## Confirmed independently — and two reasons it might be wrong
 
 The management agent, working separately, reached the same trigger: $173.2M,
