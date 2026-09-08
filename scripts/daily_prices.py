@@ -21,6 +21,12 @@ printed. Indicators default to `adj` because a split in the window otherwise
 puts a false cliff in the average, but the two are compared before any signal
 is reported — see `scripts/signals.py`.
 
+**This is the Yahoo path.** `scripts/price_source.py` owns the cache format and
+the other ways to fill it — a Twelve Data REST client (needs a key and the host
+on the network allowlist), an importer for Twelve Data CSV, and a bar-for-bar
+comparison between two sources. Both write the same rows, so nothing downstream
+knows or cares which one ran.
+
 Usage:
     uv run python scripts/daily_prices.py AAPL MSFT --years 6
     uv run python scripts/daily_prices.py --portfolio --workbook p.xlsx
