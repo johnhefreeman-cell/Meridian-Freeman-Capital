@@ -159,6 +159,14 @@ lunch in either direction.
   evidence by roughly six times.
 - **No costs or taxes.** Every rule that trades more is flattered by that, and
   the waiting rule still lost.
-- **Adjusted closes** are used for the indicators. Dividend adjustment moves a
-  200-day average by more than it moves today's close; both series are computed
-  and disagreements are reported.
+- **Indicators run on the printed close** — split-adjusted, dividend-unadjusted,
+  which is the charting convention. Verified rather than assumed: on 2026-09-04
+  Twelve Data's RSI(14) for LLY is **41.33058** and this repo returns
+  **41.33058** on the same series. On the dividend-adjusted series it returns
+  41.42706, so the choice moves RSI by about a tenth of a point on a payer.
+  Both series are still computed and disagreements are reported, because a
+  200-day average moves further under dividend adjustment than a 14-day RSI
+  does. *(The tables above were computed on the adjusted series, before this
+  was checked. Across the 19 held names the two series give the same buy/no-buy
+  answer on every one, so the results stand; a rerun would move the decimals,
+  not the conclusions.)*

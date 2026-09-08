@@ -68,6 +68,26 @@ def test_the_rule_is_two_hundred_fourteen_and_forty():
     assert sg.RSI_BUY_BELOW == 40.0
 
 
+def test_indicators_default_to_the_printed_close():
+    """Split-adjusted, dividend-unadjusted — the charting convention, and the
+    one an independent provider was verified against. Flipping this silently
+    would move every RSI by around a tenth of a point on a dividend payer."""
+    assert sg.PRICE_FIELD == "close"
+
+
+def test_evaluate_both_cross_checks_against_the_other_series():
+    """The primary result is the printed close; the cross-check is the other
+    series, and the two must be genuinely different computations."""
+    n = 260
+    got = sg.evaluate_both(series_from([100.0] * n + [101.0],
+                                       adj=[90.0] * n + [101.0]))
+    assert got["field"] == sg.PRICE_FIELD
+    assert got["close"] == 101.0
+    assert got["raw"] is not None
+    assert got["raw"]["field"] != got["field"]
+    assert got["raw"]["sma"] != pytest.approx(got["sma"])
+
+
 # --------------------------------------------------------------------------
 # sma
 # --------------------------------------------------------------------------
@@ -250,17 +270,24 @@ def test_agreeing_series_report_agreement():
 
 
 def test_disagreement_between_adjusted_and_raw_is_surfaced():
-    """A dividend-adjusted average can sit on the other side of today's close."""
+    """A dividend-adjusted average can sit on the other side of today's close.
+
+    Dividend adjustment pulls historical prices down, so the adjusted average is
+    lower. Where today's close falls between the two averages, the same name is
+    above its 200-day on one series and below it on the other — and the ticket
+    has to say so rather than pick one silently.
+    """
     n = 260
     adj = [90.0] * n + [101.0]              # adjusted history sits lower
     got = sg.evaluate_both(series_from([100.0] * n + [101.0], adj=adj))
-    assert got["above_sma"] is True         # against the adjusted average
-    assert got["raw"]["above_sma"] is True
-    assert got["agrees"] is True            # both above here
-    # now push the raw history above today's close so the two disagree
+    assert got["above_sma"] is True         # printed close, average near 100
+    assert got["raw"]["above_sma"] is True  # adjusted, average near 90
+    assert got["agrees"] is True
+
+    # Push the printed history above today's close: now the two disagree.
     got2 = sg.evaluate_both(series_from([110.0] * n + [101.0], adj=adj))
-    assert got2["above_sma"] is True
-    assert got2["raw"]["above_sma"] is False
+    assert got2["above_sma"] is False       # printed average near 110
+    assert got2["raw"]["above_sma"] is True  # adjusted average still near 90
     assert got2["agrees"] is False
 
 

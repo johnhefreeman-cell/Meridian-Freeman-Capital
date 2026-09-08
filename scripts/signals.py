@@ -48,6 +48,19 @@ SMA_DAYS = 200
 RSI_DAYS = 14
 RSI_BUY_BELOW = 40.0
 
+# Indicators run on the printed close, which Yahoo already back-adjusts for
+# splits but not for dividends. That is what a charting platform shows and what
+# the rule was written against. It is also, verified rather than assumed, what
+# Twelve Data computes: on 2026-09-04 their RSI(14) for LLY is 41.33058 and this
+# module returns 41.33058 on the same series — five decimal places, independent
+# implementation. On the dividend-adjusted series it returns 41.42706, so the
+# choice of series moves RSI by about a tenth of a point on a payer.
+#
+# `evaluate_both` still computes the adjusted series and flags disagreement,
+# because a 200-day average moves further under dividend adjustment than a
+# 14-day RSI does — enough to put a high-yield name on the other side of it.
+PRICE_FIELD = "close"
+
 # Inside this band of the RSI threshold or the average, the tag is fragile:
 # a different price source, or dividend adjustment, can move it across.
 RSI_NEAR = 2.0
@@ -93,7 +106,7 @@ def rsi(values: list[float], window: int = RSI_DAYS) -> list[float | None]:
     return out
 
 
-def evaluate(series: dict, field: str = "adj",
+def evaluate(series: dict, field: str = PRICE_FIELD,
              sma_days: int = SMA_DAYS, rsi_days: int = RSI_DAYS,
              rsi_below: float = RSI_BUY_BELOW) -> dict | None:
     """State of the setup on the last bar, or None without enough history."""
@@ -119,7 +132,7 @@ def evaluate(series: dict, field: str = "adj",
     )
 
 
-def dips(series: dict, field: str = "adj",
+def dips(series: dict, field: str = PRICE_FIELD,
          sma_days: int = SMA_DAYS, rsi_days: int = RSI_DAYS,
          rsi_below: float = RSI_BUY_BELOW) -> list[dict]:
     """Every bar in the series where the dip criteria hold.
@@ -158,14 +171,14 @@ def evaluate_both(series: dict, **kw) -> dict | None:
     on which series you use. A signal that survives only one of them is not a
     signal worth acting on, and this is where that gets caught.
     """
-    adj = evaluate(series, "adj", **kw)
-    raw = evaluate(series, "close", **kw)
-    if adj is None:
+    primary = evaluate(series, PRICE_FIELD, **kw)
+    other = evaluate(series, "adj" if PRICE_FIELD == "close" else "close", **kw)
+    if primary is None:
         return None
-    adj["raw"] = raw
-    adj["agrees"] = bool(raw is not None and raw["buy"] == adj["buy"]
-                         and raw["above_sma"] == adj["above_sma"])
-    return adj
+    primary["raw"] = other          # the cross-check series, whichever it is
+    primary["agrees"] = bool(other is not None and other["buy"] == primary["buy"]
+                             and other["above_sma"] == primary["above_sma"])
+    return primary
 
 
 def main() -> None:
